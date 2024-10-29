@@ -6,7 +6,7 @@ class Program:
         self.plant2 = PlantInfo()
         self.running = True
     
-    def get_plant_info(self):
+    def getPlantInfo(self):
         print("First plant...")
         self.plant1.name = input("Name: ")
         self.plant1.startingHeight = float(input("Starting height (cm): "))
@@ -26,7 +26,7 @@ class Program:
         print("4) Change plant information")
         print("5) Quit program")
 
-    def projectGrowth(self, days):
+    def projectGrowth(self, days):  #option 2 in menu
         print("Projected growth over time:")
         for day in range(1, days + 1):
             height1 = self.plant1.startingHeight + day * self.plant1.growthRate
@@ -35,33 +35,25 @@ class Program:
 
 
 
-        if choice == 1:
-            print(f"{plant1.name} is {plant1.startingHeight} cm tall and has a daily growth rate of {plant1.growthRate} cm per day")
-            print(f"{plant2.name} is {plant2.startingHeight} cm tall and has a daily growth rate of {plant2.growthRate} cm per day")
-
+    def projectTallestDay(self):    #option 3 in menu
+        day = 0
+        while True:
+            day += 1
+            height1 = self.plant1.startingHeight + day * self.plant1.growthRate
+            height2 = self.plant2.startingHeight + day * self.plant2.growthRate
+            if height1 != height2:
+                tallest_plant = self.plant1.name if height1 > height2 else self.plant2.name
+                print(f"On day {day}, {tallest_plant} becomes taller.")
+                break
                 
-        elif choice == 2:
-            days = int(input("How many days of growth? "))
-            x = 1
-            while x < days:
-                heightOnXDay1 = plant1.startingHeight + plant1.growthRate
-                heightOnXDay2 = plant2.startingHeight + plant2.growthRate
-                print(f"{x}: {plant1.name} is {heightOnXDay1} and {plant2.name} is {heightOnXDay2}")
-                x = x + 1
+
+    def run(self):
+        self.getPlantInfo()
+        while self.running:
+            self.displayMenu()
+            self.choice = int(input("Enter your choice: "))
         
-        elif choice == 4:
-            print("First plant...")
-            plant1.name = input("Name: ")
-            plant1.startingHeight = int(input("Starting height (cm): "))
-            plant1.growthRate = int(input("Daily growth rate: "))
 
-            print("Second plant...")
-            plant2.name = input("Name: ")
-            plant2.startingHeight = int(input("Starting height (cm): "))
-            plant2.growthRate = int(input("Daily growth rate: "))
-
-        elif choice == 5:
-            break
 
 
     print("============ PLANT GROWTH COMPARISON PROGRAM ============")
