@@ -31,35 +31,63 @@ class Program:
         for day in range(1, days + 1):
             height1 = self.plant1.startingHeight + day * self.plant1.growthRate
             height2 = self.plant2.startingHeight + day * self.plant2.growthRate
-            print(f"Day {day}: {self.plant1.name} is {height1:.2f} cm and {self.plant2.name} is {height2:.2f} cm")
+            print(f"Day {day}: {self.plant1.name} is {height1:.1f} cm and {self.plant2.name} is {height2:.1f} cm")
 
 
 
     def projectTallestDay(self):    #option 3 in menu
         day = 0
         while True:
-            day += 1
+            # Calculate the height for each plant on the current day
             height1 = self.plant1.startingHeight + day * self.plant1.growthRate
             height2 = self.plant2.startingHeight + day * self.plant2.growthRate
+            
+            # Display the heights for the current day
+            print(f"{day}: {self.plant1.name} is {height1:.1f} cm and {self.plant2.name} is {height2:.1f} cm tall.")
+            
             if height1 != height2:
-                tallest_plant = self.plant1.name if height1 > height2 else self.plant2.name
-                print(f"On day {day}, {tallest_plant} becomes taller.")
+                fastestGrowingPlant1 = self.plant1.growthRate > self.plant2.growthRate #this way we will indicate which plant grows faster
+                tallerPlant = self.plant1.name if (height1 > height2) and fastestGrowingPlant1 else self.plant2.name
+                day += 1
+                print(f"After {day} day(s), {tallerPlant} will be taller than the other.")
                 break
+            
                 
 
     def run(self):
+        print("============ PLANT GROWTH COMPARISON PROGRAM ============")
+        print("Welcome! Simulate and compare the growth of two plants.")
         self.getPlantInfo()
         while self.running:
             self.displayMenu()
             self.choice = int(input("Enter your choice: "))
         
 
+            if self.choice == 1:
+                print("Plant Information:")
+                print(f"{self.plant1.name} is {self.plant1.startingHeight} cm tall and has a daily growth rate of {self.plant1.growthRate} cm per day")
+                print(f"{self.plant2.name} is {self.plant2.startingHeight} cm tall and has a daily growth rate of {self.plant2.growthRate} cm per day")
+            
+            elif self.choice == 2:
+                days = int(input("Enter the number of days for growth projection: "))
+                self.projectGrowth(days)
+            
+            elif self.choice == 3:
+                self.projectTallestDay()
+            
+            elif self.choice == 4:
+                self.getPlantInfo()
+            
+            elif self.choice == 5:
+                print("Have a great day!")
+                self.running = False
+            
+            else:
+                print("Invalid choice. Please select a valid option.")
 
 
-    print("============ PLANT GROWTH COMPARISON PROGRAM ============")
-    print("Welcome! Simulate and compare the growth of two plants.")
-
-    choice = int(input("Enter your choice: "))
+program = Program()
+program.run()
 
 
 
